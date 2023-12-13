@@ -207,6 +207,7 @@ namespace client
             // 
             // button_sps_subscribe
             // 
+            this.button_sps_subscribe.Enabled = false;
             this.button_sps_subscribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button_sps_subscribe.Location = new System.Drawing.Point(444, 119);
             this.button_sps_subscribe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -219,6 +220,7 @@ namespace client
             // 
             // button_if_subscribe
             // 
+            this.button_if_subscribe.Enabled = false;
             this.button_if_subscribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button_if_subscribe.Location = new System.Drawing.Point(140, 119);
             this.button_if_subscribe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -289,7 +291,7 @@ namespace client
             this.Controls.Add(this.richTextBox_if);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Disucord";
             this.ResumeLayout(false);
             this.PerformLayout();
 

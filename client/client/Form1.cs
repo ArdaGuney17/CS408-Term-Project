@@ -27,6 +27,7 @@ namespace client
         {
             Control.CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
+            this.FormClosing += new FormClosingEventHandler(Disucord_DisucordClosing);
         }
 
         
@@ -160,6 +161,9 @@ namespace client
                 richTextBox_events.AppendText("You subscribed to IF100." + "\n");
                 textBox_if.Enabled = true;
                 button_if_send.Enabled = true;
+
+                Thread sub_if = new Thread(() => SubIF());
+                sub_if.Start();
             }
 
             else if (button_if_subscribe.Text == "Unsubscribe")
@@ -171,6 +175,9 @@ namespace client
                 richTextBox_if.Clear();
                 textBox_if.Enabled = false;
                 button_if_send.Enabled = false;
+
+                Thread unsub_if = new Thread(() => UnsubIF());
+                unsub_if.Start();
 
             }
         }
@@ -185,6 +192,10 @@ namespace client
                 richTextBox_events.AppendText("You subscribed to SPS101." + "\n");
                 textBox_sps.Enabled = true;
                 button_sps_send.Enabled = true;
+
+                Thread sub_sps = new Thread(() => SubSPS());
+                sub_sps.Start();
+
             }
             else if (button_sps_subscribe.Text == "Unsubscribe")
             {
@@ -195,6 +206,10 @@ namespace client
                 richTextBox_sps.Clear();
                 textBox_sps.Enabled = false;
                 button_sps_send.Enabled = false;
+
+                Thread unsub_sps = new Thread(() => UnsubSPS());
+                unsub_sps.Start();
+
             }
             
         }
@@ -237,6 +252,10 @@ namespace client
                         button_if_send.Enabled = true;
                         textBox_sps.Enabled = true;
                         button_sps_send.Enabled = true;
+                        button_if_subscribe.Enabled = true;
+                        button_sps_subscribe.Enabled = true;
+                        button_if_subscribe.BackColor = Color.LightGreen;
+                        button_sps_subscribe.BackColor = Color.LightGreen;
 
                         Thread send_name = new Thread(() => SendName());
                         send_name.Start();
@@ -288,6 +307,36 @@ namespace client
             clientSocket.Send(usernameBuffer);
         }
 
+        private void UnsubIF()
+        {
+            string unsub_if_name = ("uif" + textBox_username.Text);
+
+            Byte[] unsub_if_nameBuffer = Encoding.Default.GetBytes(unsub_if_name);
+            clientSocket.Send(unsub_if_nameBuffer);
+        }
+        private void SubIF()
+        {
+            string sub_if_name = ("sif" + textBox_username.Text);
+
+            Byte[] sub_if_nameBuffer = Encoding.Default.GetBytes(sub_if_name);
+            clientSocket.Send(sub_if_nameBuffer);
+        }
+
+        private void UnsubSPS()
+        {
+            string unsub_sps_name = ("usp" + textBox_username.Text);
+
+            Byte[] unsub_sps_nameBuffer = Encoding.Default.GetBytes(unsub_sps_name);
+            clientSocket.Send(unsub_sps_nameBuffer);
+        }
+        private void SubSPS()
+        {
+            string sub_sps_name = ("ssp" + textBox_username.Text);
+
+            Byte[] sub_sps_nameBuffer = Encoding.Default.GetBytes(sub_sps_name);
+            clientSocket.Send(sub_sps_nameBuffer);
+        }
+
         private void SendIF_Message()
         {
             string if_message = ("mif" + textBox_username.Text + ":" + textBox_if.Text);
@@ -307,6 +356,13 @@ namespace client
         private void textBox_if_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Disucord_DisucordClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            connected = false;
+            terminating = true;
+            Environment.Exit(0);
         }
     }
 
