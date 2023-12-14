@@ -211,8 +211,16 @@ namespace client
                     string server_message = Encoding.Default.GetString(buffer);
 
                     string key = server_message.Substring(0, 3);
-                   
-                    if (key == "mif")
+                    
+                    if(key == "icl"){
+
+                        richTextBox_if.Clear();
+                    }
+                    else if(key == "scl")
+                    {
+                        richTextBox_sps.Clear();
+                    }
+                    else if (key == "mif")
                     {
                         richTextBox_if.AppendText("\n");
                         richTextBox_if.AppendText("\n");
@@ -227,12 +235,7 @@ namespace client
                         richTextBox_sps.AppendText(server_message.Substring(3, (server_message.Length) - 3));
 
                         Array.Clear(buffer, 0, buffer.Length);
-
                     }
-
-                    
-
-
                 }
                 catch
                 {
@@ -321,7 +324,7 @@ namespace client
 
         private void button_if_send_Click_1(object sender, EventArgs e)
         {
-            richTextBox_if.Clear();
+            
             Thread send_if = new Thread(() => SendIF_Message());
             send_if.Start();
 
@@ -334,7 +337,7 @@ namespace client
 
         private void button_sps_send_Click_1(object sender, EventArgs e)
         {
-            richTextBox_sps.Clear();
+            
             Thread send_sps = new Thread(() => SendSPS_Message());
             send_sps.Start();
 
