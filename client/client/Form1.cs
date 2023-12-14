@@ -42,11 +42,9 @@ namespace client
 
                 Byte[] sendBuffer = Encoding.Default.GetBytes(toSend);
                 clientSocket.Send(sendBuffer);
-
-                Byte[] buffer = new Byte[64];
-                int bytesRead = clientSocket.Receive(buffer);
-
                 
+
+
             }
             catch (Exception ex)
             {
@@ -213,17 +211,27 @@ namespace client
                     string server_message = Encoding.Default.GetString(buffer);
 
                     string key = server_message.Substring(0, 3);
-
+                   
                     if (key == "mif")
                     {
+                        richTextBox_if.AppendText("\n");
+                        richTextBox_if.AppendText("\n");
                         richTextBox_if.AppendText(server_message.Substring(3, (server_message.Length)-3));
+                        
+                        Array.Clear(buffer, 0, buffer.Length);
                     }
                     else if (key == "msp")
                     {
+                        richTextBox_sps.AppendText("\n");
+                        richTextBox_sps.AppendText("\n");
                         richTextBox_sps.AppendText(server_message.Substring(3, (server_message.Length) - 3));
+
+                        Array.Clear(buffer, 0, buffer.Length);
+
                     }
 
-                    Array.Clear(buffer, 0, buffer.Length);
+                    
+
 
                 }
                 catch
@@ -240,6 +248,7 @@ namespace client
                     }
                 }
             }
+            
         }
 
         private void DisconnectName()
@@ -312,6 +321,7 @@ namespace client
 
         private void button_if_send_Click_1(object sender, EventArgs e)
         {
+            richTextBox_if.Clear();
             Thread send_if = new Thread(() => SendIF_Message());
             send_if.Start();
 
@@ -324,6 +334,7 @@ namespace client
 
         private void button_sps_send_Click_1(object sender, EventArgs e)
         {
+            richTextBox_sps.Clear();
             Thread send_sps = new Thread(() => SendSPS_Message());
             send_sps.Start();
 
