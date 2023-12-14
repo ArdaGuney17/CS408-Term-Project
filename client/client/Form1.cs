@@ -20,6 +20,7 @@ namespace client
         bool terminating = false;
         bool connected = false;
         Socket clientSocket;
+        Socket serverSocket;
         bool sps_subscribed = false;
         bool if_subscribed = false;
 
@@ -30,102 +31,7 @@ namespace client
             this.FormClosing += new FormClosingEventHandler(Disucord_DisucordClosing);
         }
 
-        
 
-
-
-        private void button_if_send_Click(object sender, EventArgs e)
-        {
-
-            string message = textBox_if.Text;
-            richTextBox_events.AppendText("You: " + message + "\n");
-
-            Thread SendReceiveThreadIF = new Thread(SendAndReceiveIF);
-            SendReceiveThreadIF.Start();
-        }
-
-        private void button_sps_send_Click(object sender, EventArgs e)
-        {
-
-            string message = textBox_sps.Text;
-            richTextBox_events.AppendText("You: " + message + "\n");
-
-            Thread SendReceiveThreadSPS = new Thread(SendAndReceiveSPS);
-            SendReceiveThreadSPS.Start();
-        }
-
-
-        private void SendAndReceiveIF()
-        {
-            while (connected)
-            {
-                try
-                {
-
-                    string toSend = textBox_if.Text;
-
-
-
-                    Byte[] sendBuffer = Encoding.Default.GetBytes(toSend);
-                    clientSocket.Send(sendBuffer);
-
-                    Byte[] buffer = new Byte[64];
-                    clientSocket.Receive(buffer);
-
-
-                    string token = Encoding.Default.GetString(buffer);
-
-                }
-                catch
-                {
-                    if (!terminating)
-                    {
-                        Console.WriteLine("Disconnected");
-                    }
-
-                    clientSocket.Close();
-                    connected = false;
-                }
-
-            }
-
-        }
-
-        private void SendAndReceiveSPS()
-        {
-            while (connected)
-            {
-                try
-                {
-
-                    string toSend = textBox_sps.Text;
-
-
-
-                    Byte[] sendBuffer = Encoding.Default.GetBytes(toSend);
-                    clientSocket.Send(sendBuffer);
-
-                    Byte[] buffer = new Byte[64];
-                    clientSocket.Receive(buffer);
-
-
-                    string token = Encoding.Default.GetString(buffer);
-
-                }
-                catch
-                {
-                    if (!terminating)
-                    {
-                        Console.WriteLine("Disconnected");
-                    }
-
-                    clientSocket.Close();
-                    connected = false;
-                }
-
-            }
-
-        }
 
 
         private void Connect()
@@ -140,9 +46,7 @@ namespace client
                 Byte[] buffer = new Byte[64];
                 int bytesRead = clientSocket.Receive(buffer);
 
-                string receivedData = Encoding.Default.GetString(buffer, 0, bytesRead);
-
-                richTextBox_events.Text = receivedData;
+                
             }
             catch (Exception ex)
             {
@@ -214,11 +118,6 @@ namespace client
             
         }
 
-        private void textBox_port_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button_connect_Click_1(object sender, EventArgs e)
         {
             if (button_connect.Text == "Connect" && textBox_ip.Text != "" && textBox_port.Text != "" && textBox_username.Text != "") { 
@@ -237,6 +136,7 @@ namespace client
                     try
                     {
                         clientSocket.Connect(IP, portNum);
+
                         connected = true;
                         richTextBox_events.AppendText("Connected to the server!\n");
 
@@ -248,17 +148,23 @@ namespace client
                         textBox_ip.Enabled = false;
                         textBox_port.Enabled = false;
                         richTextBox_events.Enabled = true;
-                        textBox_if.Enabled = true;
-                        button_if_send.Enabled = true;
-                        textBox_sps.Enabled = true;
-                        button_sps_send.Enabled = true;
                         button_if_subscribe.Enabled = true;
                         button_sps_subscribe.Enabled = true;
-                        button_if_subscribe.BackColor = Color.LightGreen;
-                        button_sps_subscribe.BackColor = Color.LightGreen;
-
+                        if(button_if_subscribe.Text == "Subscribe")
+                        {
+                            button_if_subscribe.BackColor = Color.LightGreen;
+                        }
+                        if (button_sps_subscribe.Text == "Subscribe")
+                        {
+                            button_sps_subscribe.BackColor = Color.LightGreen;
+                        }
                         Thread send_name = new Thread(() => SendName());
                         send_name.Start();
+                        
+                        
+                        Thread RecieveThread = new Thread(() => Receive(serverSocket));
+                        RecieveThread.Start();
+
 
 
                     }
@@ -284,11 +190,52 @@ namespace client
                 button_if_send.Enabled = false;
                 textBox_sps.Enabled = false;
                 button_sps_send.Enabled = false;
+                button_if_subscribe.Enabled = false;
+                button_sps_subscribe.Enabled = false;
+
 
             }
             else
             {
                 richTextBox_events.AppendText("Please fill necessary parts!\n");
+            }
+        }
+
+        private void Receive(Socket thisServer)
+        {
+            while (connected)
+            {
+                try
+                {
+                    Byte[] buffer = new Byte[64];
+                    clientSocket.Receive(buffer);
+
+                    string server_message = Encoding.Default.GetString(buffer);
+
+                    //richTextBox_if.Clear();
+
+                    richTextBox_if.AppendText("----------------------\n");
+
+                    richTextBox_if.AppendText(server_message);
+
+                    richTextBox_if.AppendText("----------------------\n");
+
+                    Array.Clear(buffer, 0, buffer.Length);
+
+                }
+                catch
+                {
+                    if (!terminating)
+                    {
+                        richTextBox_events.AppendText("The server has disconnected\n");
+                        button_if_subscribe.Enabled = false;
+                        button_sps_subscribe.Enabled = false;
+                        button_if_send.Enabled = false;
+                        button_sps_send.Enabled = false;
+                        textBox_if.Enabled = false;
+                        textBox_sps.Enabled = false;
+                    }
+                }
             }
         }
 
@@ -339,7 +286,7 @@ namespace client
 
         private void SendIF_Message()
         {
-            string if_message = ("mif" + textBox_username.Text + ":" + textBox_if.Text);
+            string if_message = ("mif" + textBox_username.Text + ": " + textBox_if.Text);
 
             Byte[] if_mesaggeBuffer = Encoding.Default.GetBytes(if_message);
             clientSocket.Send(if_mesaggeBuffer);
@@ -347,15 +294,10 @@ namespace client
 
         private void SendSPS_Message()
         {
-            string sps_message = textBox_sps.Text;
+            string sps_message = ("msp" + textBox_username.Text + ": " + textBox_sps.Text);
 
             Byte[] sps_mesaggeBuffer = Encoding.Default.GetBytes(sps_message);
             clientSocket.Send(sps_mesaggeBuffer);
-        }
-
-        private void textBox_if_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void Disucord_DisucordClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -363,6 +305,30 @@ namespace client
             connected = false;
             terminating = true;
             Environment.Exit(0);
+        }
+
+        private void button_if_send_Click_1(object sender, EventArgs e)
+        {
+            Thread send_if = new Thread(() => SendIF_Message());
+            send_if.Start();
+
+            if(button_if_subscribe.Text == "Unsubscribe")
+            {
+                textBox_if.Enabled = true;
+                button_if_send.Enabled = true;
+            }
+        }
+
+        private void button_sps_send_Click_1(object sender, EventArgs e)
+        {
+            Thread send_sps = new Thread(() => SendSPS_Message());
+            send_sps.Start();
+
+            if (button_sps_subscribe.Text == "Unsubscribe")
+            {
+                textBox_sps.Enabled = true;
+                button_sps_send.Enabled = true;
+            }
         }
     }
 

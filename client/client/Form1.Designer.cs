@@ -55,10 +55,10 @@ namespace client
             // 
             // richTextBox_if
             // 
-            this.richTextBox_if.Location = new System.Drawing.Point(38, 164);
+            this.richTextBox_if.Location = new System.Drawing.Point(28, 164);
             this.richTextBox_if.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox_if.Name = "richTextBox_if";
-            this.richTextBox_if.Size = new System.Drawing.Size(266, 312);
+            this.richTextBox_if.Size = new System.Drawing.Size(288, 312);
             this.richTextBox_if.TabIndex = 0;
             this.richTextBox_if.Text = "";
             // 
@@ -66,7 +66,7 @@ namespace client
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(32, 126);
+            this.label1.Location = new System.Drawing.Point(33, 129);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 29);
             this.label1.TabIndex = 2;
@@ -84,7 +84,7 @@ namespace client
             this.richTextBox_sps.Location = new System.Drawing.Point(335, 164);
             this.richTextBox_sps.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox_sps.Name = "richTextBox_sps";
-            this.richTextBox_sps.Size = new System.Drawing.Size(266, 312);
+            this.richTextBox_sps.Size = new System.Drawing.Size(287, 312);
             this.richTextBox_sps.TabIndex = 3;
             this.richTextBox_sps.Text = "";
             // 
@@ -92,7 +92,7 @@ namespace client
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(622, 126);
+            this.label3.Location = new System.Drawing.Point(633, 129);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 29);
             this.label3.TabIndex = 8;
@@ -100,7 +100,7 @@ namespace client
             // 
             // richTextBox_events
             // 
-            this.richTextBox_events.Location = new System.Drawing.Point(628, 164);
+            this.richTextBox_events.Location = new System.Drawing.Point(638, 164);
             this.richTextBox_events.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox_events.Name = "richTextBox_events";
             this.richTextBox_events.Size = new System.Drawing.Size(266, 354);
@@ -114,7 +114,6 @@ namespace client
             this.textBox_port.Name = "textBox_port";
             this.textBox_port.Size = new System.Drawing.Size(134, 26);
             this.textBox_port.TabIndex = 9;
-            this.textBox_port.TextChanged += new System.EventHandler(this.textBox_port_TextChanged);
             // 
             // label4
             // 
@@ -167,12 +166,11 @@ namespace client
             // textBox_if
             // 
             this.textBox_if.Enabled = false;
-            this.textBox_if.Location = new System.Drawing.Point(38, 492);
+            this.textBox_if.Location = new System.Drawing.Point(28, 492);
             this.textBox_if.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_if.Name = "textBox_if";
-            this.textBox_if.Size = new System.Drawing.Size(194, 26);
+            this.textBox_if.Size = new System.Drawing.Size(216, 26);
             this.textBox_if.TabIndex = 19;
-            this.textBox_if.TextChanged += new System.EventHandler(this.textBox_if_TextChanged);
             // 
             // textBox_sps
             // 
@@ -180,39 +178,41 @@ namespace client
             this.textBox_sps.Location = new System.Drawing.Point(335, 492);
             this.textBox_sps.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_sps.Name = "textBox_sps";
-            this.textBox_sps.Size = new System.Drawing.Size(194, 26);
+            this.textBox_sps.Size = new System.Drawing.Size(209, 26);
             this.textBox_sps.TabIndex = 20;
             // 
             // button_if_send
             // 
             this.button_if_send.Enabled = false;
-            this.button_if_send.Location = new System.Drawing.Point(238, 492);
+            this.button_if_send.Location = new System.Drawing.Point(250, 492);
             this.button_if_send.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_if_send.Name = "button_if_send";
             this.button_if_send.Size = new System.Drawing.Size(66, 27);
             this.button_if_send.TabIndex = 22;
             this.button_if_send.Text = "Send";
             this.button_if_send.UseVisualStyleBackColor = true;
+            this.button_if_send.Click += new System.EventHandler(this.button_if_send_Click_1);
             // 
             // button_sps_send
             // 
             this.button_sps_send.Enabled = false;
-            this.button_sps_send.Location = new System.Drawing.Point(536, 491);
+            this.button_sps_send.Location = new System.Drawing.Point(550, 491);
             this.button_sps_send.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_sps_send.Name = "button_sps_send";
             this.button_sps_send.Size = new System.Drawing.Size(66, 28);
             this.button_sps_send.TabIndex = 23;
             this.button_sps_send.Text = "Send";
             this.button_sps_send.UseVisualStyleBackColor = true;
+            this.button_sps_send.Click += new System.EventHandler(this.button_sps_send_Click_1);
             // 
             // button_sps_subscribe
             // 
             this.button_sps_subscribe.Enabled = false;
             this.button_sps_subscribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button_sps_subscribe.Location = new System.Drawing.Point(444, 119);
+            this.button_sps_subscribe.Location = new System.Drawing.Point(440, 121);
             this.button_sps_subscribe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_sps_subscribe.Name = "button_sps_subscribe";
-            this.button_sps_subscribe.Size = new System.Drawing.Size(158, 39);
+            this.button_sps_subscribe.Size = new System.Drawing.Size(182, 39);
             this.button_sps_subscribe.TabIndex = 25;
             this.button_sps_subscribe.Text = "Subscribe";
             this.button_sps_subscribe.UseVisualStyleBackColor = true;
@@ -222,10 +222,10 @@ namespace client
             // 
             this.button_if_subscribe.Enabled = false;
             this.button_if_subscribe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button_if_subscribe.Location = new System.Drawing.Point(140, 119);
+            this.button_if_subscribe.Location = new System.Drawing.Point(119, 119);
             this.button_if_subscribe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_if_subscribe.Name = "button_if_subscribe";
-            this.button_if_subscribe.Size = new System.Drawing.Size(164, 39);
+            this.button_if_subscribe.Size = new System.Drawing.Size(197, 39);
             this.button_if_subscribe.TabIndex = 26;
             this.button_if_subscribe.Text = "Subscribe";
             this.button_if_subscribe.UseVisualStyleBackColor = true;
@@ -247,7 +247,7 @@ namespace client
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label8.Location = new System.Drawing.Point(330, 126);
+            this.label8.Location = new System.Drawing.Point(330, 131);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(106, 29);
             this.label8.TabIndex = 31;

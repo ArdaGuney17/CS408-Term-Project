@@ -28,3 +28,13 @@ C:\Users\Arda\Desktop\CS408-Term-Project-main (1)\CS408-Term-Project-main\client
 C:\Users\Arda\Desktop\CS408-Term-Project-main (1)\CS408-Term-Project-main\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
 C:\Users\Arda\Desktop\CS408-Term-Project-main (1)\CS408-Term-Project-main\client\client\obj\Debug\client.exe
 C:\Users\Arda\Desktop\CS408-Term-Project-main (1)\CS408-Term-Project-main\client\client\obj\Debug\client.pdb
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\bin\Debug\client.exe.config
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\bin\Debug\client.exe
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\bin\Debug\client.pdb
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.csproj.AssemblyReference.cache
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.Form1.resources
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.Properties.Resources.resources
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.csproj.GenerateResource.cache
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.csproj.CoreCompileInputs.cache
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.exe
+C:\Users\Arda\Documents\GitHub\CS408-Term-Project\client\client\obj\Debug\client.pdb
