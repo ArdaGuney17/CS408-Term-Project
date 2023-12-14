@@ -222,7 +222,6 @@ namespace client
                     {
                         richTextBox_sps.AppendText(server_message.Substring(3, (server_message.Length) - 3));
                     }
-                    richTextBox_if.AppendText(server_message);
 
                     Array.Clear(buffer, 0, buffer.Length);
 
