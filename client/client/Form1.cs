@@ -212,13 +212,17 @@ namespace client
 
                     string server_message = Encoding.Default.GetString(buffer);
 
-                    //richTextBox_if.Clear();
+                    string key = server_message.Substring(0, 3);
 
-                    richTextBox_if.AppendText("----------------------\n");
-
+                    if (key == "mif")
+                    {
+                        richTextBox_if.AppendText(server_message.Substring(3, (server_message.Length)-3));
+                    }
+                    else if (key == "msp")
+                    {
+                        richTextBox_sps.AppendText(server_message.Substring(3, (server_message.Length) - 3));
+                    }
                     richTextBox_if.AppendText(server_message);
-
-                    richTextBox_if.AppendText("----------------------\n");
 
                     Array.Clear(buffer, 0, buffer.Length);
 
