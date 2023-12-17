@@ -17,6 +17,7 @@ namespace client
     public partial class Form1 : Form
     {
 
+        //initial ststea of connection, subscription and creation of sockets done here.
         bool terminating = false;
         bool connected = false;
         Socket clientSocket;
@@ -31,9 +32,14 @@ namespace client
             this.FormClosing += new FormClosingEventHandler(Disucord_DisucordClosing);
         }
 
+        //list created to hold the subscription statuese of clients.
+        //clients usernames and the texts written on the subscription/unsubscription button rgiht before clicking the disconnection button held. 
         List<string> subscription_list = new List<string>();
 
 
+        //function that handles the general operations when subscripe to if chanell button clicked
+        //the thread for this operaiton gets created and it calls the SubIF function.
+        //this functions decides the color changes, enability and the messages written on the events window on client form after clicking subscription to if button. 
         private void button_if_subscribe_Click(object sender, EventArgs e)
         {
             if (button_if_subscribe.Text == "Subscribe")
@@ -65,6 +71,9 @@ namespace client
             }
         }
 
+        //function that handles the general operations when subscripe to sps chanell button clicked
+        //the thread for this operaiton gets created and it calls the SubSPS function.
+        //this functions decides the color changes, enability and the messages written on the events window on client form after clicking subscription to sps button.
         private void button_sps_subscribe_Click(object sender, EventArgs e)
         {
             if (button_sps_subscribe.Text == "Subscribe")
@@ -97,6 +106,12 @@ namespace client
 
         }
 
+        //this is the function that manages the events happens after clicking the connect/disconnect button.
+        //the color changes and enabilty statuses changes necessary after clicking connect/disconnect button helds here by also taking in consedariton if this the cient first time connecting to the server or not.
+        //by this function the connection statuses and the subscription statuses during disconnection tracked for reconnection of the same client to subscription_list.
+        //the username text written on if subscription and sps subscription button before licking disconnet added to the list if the username is not in the list.
+        //one index after the username is that usernamed clients subscription status for if channel
+        //two index after the username is that usernamed clients subscription status for sps channel
         private void button_connect_Click_1(object sender, EventArgs e)
         {
             if (button_connect.Text == "Connect" && textBox_ip.Text != "" && textBox_port.Text != "" && textBox_username.Text != "")
@@ -223,6 +238,15 @@ namespace client
             }
         }
 
+        //this functions manages the recieve buffer for the messages coming from server inorder to display them on the channels.
+        //Also by each incoming message the functions clears the chanell boxex inorder to prevent duplication of the same message chain.
+        //the message coming from server always has a three char long string which is a ststus key.
+        //if the key is icl it means clearing the if richtextbox to prevent duplicaiton of same text chain.
+        //if the key is scl it means clearing the sps richtextbox to prevent duplicaiton of same text chain.
+        //if the key is mif it means this recieve buffer has a text ot display at the if richtextbox.
+        //if the key is msp it means this recieve buffer has a text ot display at the sps richtextbox.
+        //if the key is dbl it means there is already a user with the username out clients wnats to connect and asks him to enter with a different onr.
+
         private void Receive(Socket thisServer)
         {
             while (connected)
@@ -261,6 +285,7 @@ namespace client
 
                         Array.Clear(buffer, 0, buffer.Length);
                     }
+                    
                 }
                 catch
                 {
@@ -282,6 +307,8 @@ namespace client
 
         }
 
+        // this functions sends an infomraiton buffer with keyword "dis" to the server for server to handle necessary operaitons for disconnection.
+        // by sending key "dis" in front of the username of client.
         private void DisconnectName()
         {
             string disconnectname = ("dis" + textBox_username.Text);
@@ -299,6 +326,9 @@ namespace client
             connected = false;
 
         }
+
+        //this functions manages the sending of the username information of the connected client.
+        // by sending key "con" in front of the username of client.
         private void SendName()
         {
             string username = ("con" + textBox_username.Text);
@@ -307,6 +337,8 @@ namespace client
             clientSocket.Send(usernameBuffer);
         }
 
+        //this function manages the sending of the informaiton buffer of a clients unsubcription from IF chanell.
+        // by sending key "uif" in front of the username of client.
         private void UnsubIF()
         {
             string unsub_if_name = ("uif" + textBox_username.Text);
@@ -314,6 +346,9 @@ namespace client
             Byte[] unsub_if_nameBuffer = Encoding.Default.GetBytes(unsub_if_name);
             clientSocket.Send(unsub_if_nameBuffer);
         }
+
+        //this function manages the sending of the informaiton buffer of a clients subcription from IF chanell.
+        // by sending key "sif" in front of the username of client.
         private void SubIF()
         {
             string sub_if_name = ("sif" + textBox_username.Text);
@@ -322,6 +357,8 @@ namespace client
             clientSocket.Send(sub_if_nameBuffer);
         }
 
+        //this function manages the sending of the informaiton buffer of a clients unsubcription from SPS chanell.
+        // by sending key "usp" in front of the username of client.
         private void UnsubSPS()
         {
             string unsub_sps_name = ("usp" + textBox_username.Text);
@@ -329,6 +366,9 @@ namespace client
             Byte[] unsub_sps_nameBuffer = Encoding.Default.GetBytes(unsub_sps_name);
             clientSocket.Send(unsub_sps_nameBuffer);
         }
+
+        //this function manages the sending of the informaiton buffer of a clients subcription from SPS chanell.
+        // by sending key "ssp" in front of the username of client.
         private void SubSPS()
         {
             string sub_sps_name = ("ssp" + textBox_username.Text);
@@ -337,6 +377,8 @@ namespace client
             clientSocket.Send(sub_sps_nameBuffer);
         }
 
+        //this function manages the sending of the text message buffer of a clients to IF chanell.
+        // by sending key "mif" in front of the username of client.
         private void SendIF_Message()
         {
             string if_message = ("mif" + textBox_username.Text + ": " + textBox_if.Text);
@@ -345,6 +387,8 @@ namespace client
             clientSocket.Send(if_mesaggeBuffer);
         }
 
+        //this function manages the sending of the text message buffer of a clients to SPS chanell.
+        // by sending key "msp" in front of the username of client.
         private void SendSPS_Message()
         {
             string sps_message = ("msp" + textBox_username.Text + ": " + textBox_sps.Text);
@@ -353,6 +397,7 @@ namespace client
             clientSocket.Send(sps_mesaggeBuffer);
         }
 
+        //thşs functions manages the closing of the page by clicking the closing icon withouth programm crahsing.
         private void Disucord_DisucordClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             connected = false;
@@ -360,11 +405,13 @@ namespace client
             Environment.Exit(0);
         }
 
+        //this functions creates the thread for sending a message to if chanell and updates the conditions of subscription buttons according to that.
         private void button_if_send_Click_1(object sender, EventArgs e)
         {
 
             Thread send_if = new Thread(() => SendIF_Message());
             send_if.Start();
+            textBox_if.Clear();
 
             if (button_if_subscribe.Text == "Unsubscribe")
             {
@@ -373,11 +420,13 @@ namespace client
             }
         }
 
+        //this functions creates the thread for sending a message to sps chanell and updates the conditions of subscription buttons according to that.
         private void button_sps_send_Click_1(object sender, EventArgs e)
         {
 
             Thread send_sps = new Thread(() => SendSPS_Message());
             send_sps.Start();
+            textBox_sps.Clear();
 
             if (button_sps_subscribe.Text == "Unsubscribe")
             {
